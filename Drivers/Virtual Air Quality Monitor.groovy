@@ -32,5 +32,18 @@ metadata {
         attribute "tVOC", "number"
         attribute "radonShortTermAvg", "number"
         attribute "radonLongTermAvg", "number"       
+
+        command "setValuesNoPM2_5", [[type:"STRING"],[type:"STRING"],[type:"STRING"],[type:"STRING"],[type:"STRING"],[type:"STRING"],[type:"STRING"]]
 	}
+}
+
+def setValuesNoPM2_5(String temp, String rh, String bar, String co2, String tVoc, String radonShortTermAvg, String radonLongTermAvg)
+{
+    sendEvent(name: "temperature", value: temp.toDouble().round(2), unit: "°", isStateChange: true)
+    sendEvent(name: "humidity", value: rh.toDouble().round(0), unit: "%", isStateChange: true)
+    sendEvent(name: "pressure", value: bar, unit: "mbar", isStateChange: true)
+    sendEvent(name: "carbonDioxide", value: co2, unit: "ppm", isStateChange: true)
+    sendEvent(name: "tVOC", value: tVoc, unit: "ppb", isStateChange: true)
+    sendEvent(name: "radonShortTermAvg", value: radonShortTermAvg.toDouble().round(2), unit: "pCi/L", isStateChange: true)
+    sendEvent(name: "radonLongTermAvg", value: radonLongTermAvg.toDouble().round(2), unit: "pCi/L", isStateChange: true)
 }
