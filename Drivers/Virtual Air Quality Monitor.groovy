@@ -33,13 +33,24 @@ metadata {
         attribute "radonShortTermAvg", "number"
         attribute "radonLongTermAvg", "number"       
 
-        command "setValuesNoPM2_5", [[type:"STRING"],[type:"STRING"],[type:"STRING"],[type:"STRING"],[type:"STRING"],[type:"STRING"],[type:"STRING"]]
+	preferences {
+		input name: "useF", type: "bool", title: "Use Imperial (F) instead of Metric (C)", required: true, defaultValue: false
 	}
+        command "setValuesNoPM2_5", [[type:"STRING"],[type:"STRING"],[type:"STRING"],[type:"STRING"],[type:"STRING"],[type:"STRING"],[type  :"STRING"]]
+        command "errorNotFound", []
+	}
+}
+
+def errorNotFound()
+{
+    log.error("WavePlus not found via BlueTooth")
 }
 
 def setValuesNoPM2_5(String temp, String rh, String bar, String co2, String tVoc, String radonShortTermAvg, String radonLongTermAvg)
 {
-    sendEvent(name: "temperature", value: temp.toDouble().round(2), unit: "°", isStateChange: true)
+    modifiedTemp = temp
+    if (useF) modifiedTemp = (temp * 1.8) + 32
+    sendEvent(name: "temperature", value: modifiedTemp.toDouble().round(2), unit: "°", isStateChange: true)
     sendEvent(name: "humidity", value: rh.toDouble().round(0), unit: "%", isStateChange: true)
     sendEvent(name: "pressure", value: bar, unit: "mbar", isStateChange: true)
     sendEvent(name: "carbonDioxide", value: co2, unit: "ppm", isStateChange: true)
