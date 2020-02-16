@@ -48,8 +48,8 @@ def errorNotFound()
 
 def setValuesNoPM2_5(String temp, String rh, String bar, String co2, String tVoc, String radonShortTermAvg, String radonLongTermAvg)
 {
-    modifiedTemp = temp
-    if (useF) modifiedTemp = (temp * 1.8) + 32
+    modifiedTemp = temp.toDouble()
+    if (useF) modifiedTemp = (modifiedTemp * 1.8) + 32
     sendEvent(name: "temperature", value: modifiedTemp.toDouble().round(2), unit: "°", isStateChange: true)
     sendEvent(name: "humidity", value: rh.toDouble().round(0), unit: "%", isStateChange: true)
     sendEvent(name: "pressure", value: bar, unit: "mbar", isStateChange: true)
