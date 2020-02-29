@@ -28,7 +28,7 @@ metadata {
         capability "Pressure Measurement"
         capability "Carbon Dioxide Measurement"
      
-        attribute "pm2.5", "number"
+        attribute "pm2_5", "number"
         attribute "tVOC", "number"
         attribute "radonShortTermAvg", "number"
         attribute "radonLongTermAvg", "number"       
@@ -37,6 +37,7 @@ metadata {
 		input name: "useF", type: "bool", title: "Use Imperial (F) instead of Metric (C)", required: true, defaultValue: false
 	}
         command "setValuesNoPM2_5", [[type:"STRING"],[type:"STRING"],[type:"STRING"],[type:"STRING"],[type:"STRING"],[type:"STRING"],[type  :"STRING"]]
+        command "setValuePM2_5", [[type:"STRING"]]
         command "errorNotFound", []
 	}
 }
@@ -44,6 +45,11 @@ metadata {
 def errorNotFound()
 {
     log.error("WavePlus not found via BlueTooth")
+}
+
+def setValuePM2_5(String pm2_5)
+{
+    sendEvent(name: "pm2_5", value: pm2_5, unit: "µg/m³", isStateChange: true)
 }
 
 def setValuesNoPM2_5(String temp, String rh, String bar, String co2, String tVoc, String radonShortTermAvg, String radonLongTermAvg)
