@@ -32,6 +32,8 @@ metadata {
         attribute "tVOC", "number"
         attribute "radonShortTermAvg", "number"
         attribute "radonLongTermAvg", "number"       
+        attribute "lastUpdateWavePlus", "date"       
+        attribute "lastUpdatePM2_5", "date"       
 
 	preferences {
 		input name: "useF", type: "bool", title: "Use Imperial (F) instead of Metric (C)", required: true, defaultValue: false
@@ -50,17 +52,19 @@ def errorNotFound()
 def setValuePM2_5(String pm2_5)
 {
     sendEvent(name: "pm2_5", value: pm2_5, unit: "µg/m³", isStateChange: true)
+    sendEvent(name: "lastUpdatePM2_5", value: new Date(now()), isStateChange: true)
 }
 
 def setValuesNoPM2_5(String temp, String rh, String bar, String co2, String tVoc, String radonShortTermAvg, String radonLongTermAvg)
 {
     modifiedTemp = temp.toDouble()
     if (useF) modifiedTemp = (modifiedTemp * 1.8) + 32
-    sendEvent(name: "temperature", value: modifiedTemp.toDouble().round(2), unit: "°", isStateChange: true)
+    sendEvent(name: "temperature", value: modifiedTemp.round(2), unit: "°", isStateChange: true)
     sendEvent(name: "humidity", value: rh.toDouble().round(0), unit: "%", isStateChange: true)
     sendEvent(name: "pressure", value: bar, unit: "mbar", isStateChange: true)
     sendEvent(name: "carbonDioxide", value: co2, unit: "ppm", isStateChange: true)
     sendEvent(name: "tVOC", value: tVoc, unit: "ppb", isStateChange: true)
     sendEvent(name: "radonShortTermAvg", value: radonShortTermAvg.toDouble().round(2), unit: "pCi/L", isStateChange: true)
     sendEvent(name: "radonLongTermAvg", value: radonLongTermAvg.toDouble().round(2), unit: "pCi/L", isStateChange: true)
+    sendEvent(name: "lastUpdateWavePlus", value: new Date(now()), isStateChange: true)
 }
