@@ -1,5 +1,5 @@
 /**
- *  Virtual Smoke and CO sensor (Homebridge - Nest and Homebridge - Hubitat : intended use to expose nest protect to HSM rules)
+ *  Virtual Carbon Monoxide Detector (Homebridge - Nest and Homebridge - Hubitat : intended use to expose nest protect to HSM rules)
  *
  *  Copyright 2017 Daniel Ogorchock
  *
