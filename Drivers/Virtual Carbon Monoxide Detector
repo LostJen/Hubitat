@@ -24,7 +24,7 @@
  * 
  */
 metadata {
-	definition (name: "Virtual Carbon Monoxide Detector", namespace: "RHayn", author: "RHayn") {
+	definition (name: "Virtual Carbon Monoxide Detector", namespace: "rfhayn", author: "rfhayn") {
 		capability "Carbon Monoxide Detector"
 		capability "Sensor"
 		capability "Switch"
